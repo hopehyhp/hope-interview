@@ -1,0 +1,51 @@
+:host {
+  display: block;
+}
+
+.toolbar {
+  flex-wrap: wrap;
+}
+
+.ops {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ops .btn + .btn {
+  margin-left: 0;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.options {
+  margin: 0 0 16px;
+}
+
+.option-head,
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.option-head {
+  justify-content: space-between;
+  color: var(--c-text-muted);
+  font-size: 12px;
+}
+
+.option-row .key {
+  width: 48px;
+}
+
+@media (max-width: 840px) {
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}

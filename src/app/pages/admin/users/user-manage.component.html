@@ -1,0 +1,21 @@
+<section class="page">
+  <p class="lead">当前注册账号，后续可扩展角色与禁用状态。</p>
+  <div class="panel table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>账号</th>
+          <th>显示名称</th>
+          <th>角色</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of rows">
+          <td>{{ row.username }}</td>
+          <td>{{ row.displayName }}</td>
+          <td>{{ roleText(row.role) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

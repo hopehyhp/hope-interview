@@ -1,0 +1,69 @@
+<section class="page">
+  <p class="lead">按分类与难度抽题组卷，选择题自动判分，简答题交卷后对照解析。</p>
+
+  <div class="panel pending" *ngIf="pending">
+    <h3>有未完成的试卷</h3>
+    <p>上次抽了 {{ pending.questions.length }} 题，可继续作答或重新组卷。</p>
+    <div class="modal-ops" style="margin-top: 12px; justify-content: flex-start;">
+      <button type="button" class="btn primary" (click)="start(true)">继续答题</button>
+      <button type="button" class="btn" (click)="start(false)">放弃并重新组卷</button>
+    </div>
+  </div>
+
+  <div class="panel setup">
+    <h3>模拟组卷</h3>
+    <div class="grid-4">
+      <label>
+        分类
+        <select class="ctrl block" [(ngModel)]="categoryId">
+          <option value="">全部</option>
+          <option *ngFor="let item of categoryList" [value]="item.id">{{ item.name }}</option>
+        </select>
+      </label>
+      <label>
+        难度
+        <select class="ctrl block" [(ngModel)]="difficulty">
+          <option value="">不限</option>
+          <option value="easy">基础</option>
+          <option value="medium">进阶</option>
+          <option value="hard">难点</option>
+        </select>
+      </label>
+      <label>
+        题量
+        <input class="ctrl block" type="number" min="1" max="50" [(ngModel)]="count" />
+      </label>
+      <label>
+        限时（分钟，0 不限）
+        <input class="ctrl block" type="number" min="0" max="180" [(ngModel)]="timeLimitMin" />
+      </label>
+    </div>
+    <p class="muted">当前题池 {{ pool }} 题，不足题量时按实际数量抽题。</p>
+    <p class="error" *ngIf="error">{{ error }}</p>
+    <button type="button" class="btn primary" (click)="start(false)">开始答题</button>
+  </div>
+
+  <div class="panel table-wrap" *ngIf="history.length">
+    <h3 class="pad">最近成绩</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>时间</th>
+          <th>范围</th>
+          <th>得分</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of history">
+          <td>{{ row.finishedAt | date:'MM-dd HH:mm' }}</td>
+          <td>{{ categoryName(row.config.categoryId) }} · {{ exam.diffLabel(row.config.difficulty) }} · {{ row.items.length }} 题</td>
+          <td>{{ row.scoredCount ? row.score + ' 分' : '简答自评' }}</td>
+          <td class="ops">
+            <a class="btn text" [routerLink]="['/user/exam/result', row.id]">详情</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

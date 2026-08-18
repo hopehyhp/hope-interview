@@ -1,0 +1,30 @@
+:host {
+  display: block;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.q-item {
+  padding: 14px 16px;
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
+  background: var(--c-surface);
+}
+
+.q-item strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.q-item span {
+  color: var(--c-text-muted);
+  font-size: 12px;
+}
+
+.q-item .ops {
+  margin-top: 10px;
+}

@@ -1,0 +1,40 @@
+:host {
+  display: block;
+}
+
+.detail h2 {
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.meta {
+  margin: 0 0 10px;
+  color: var(--c-text-muted);
+  font-size: 12px;
+}
+
+.opts {
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.opts li {
+  margin-bottom: 8px;
+}
+
+.ref {
+  padding-top: 16px;
+  border-top: 1px solid var(--c-border);
+}
+
+.ref h3 {
+  margin: 0 0 8px;
+}
+
+.ref p {
+  margin: 0 0 8px;
+  color: var(--c-text);
+  line-height: 1.7;
+}

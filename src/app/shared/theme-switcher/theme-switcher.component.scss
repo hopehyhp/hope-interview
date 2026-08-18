@@ -1,0 +1,30 @@
+:host {
+  display: inline-flex;
+}
+
+.swatches {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.dot.blue {
+  background: #1e4d8c;
+}
+
+.dot.purple {
+  background: #5c4d82;
+}
+
+.dot.on {
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px var(--c-text);
+}

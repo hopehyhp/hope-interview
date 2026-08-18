@@ -1,0 +1,25 @@
+<section class="page">
+  <div class="toolbar">
+    <span class="muted">共 {{ rows.length }} 道错题，答对后自动移出。</span>
+    <button type="button" class="btn primary" [disabled]="!rows.length" (click)="retryAll()">再练全部</button>
+  </div>
+  <p class="error" *ngIf="error">{{ error }}</p>
+
+  <div class="list">
+    <article class="q-item" *ngFor="let row of rows">
+      <strong>{{ row.question?.title }}</strong>
+      <span>
+        {{ categoryName(row.question?.categoryId || '') }}
+        · {{ row.question ? typeLabels[row.question.type] : '' }}
+        · {{ row.question ? diffLabels[row.question.difficulty] : '' }}
+        · 错 {{ row.wrongCount }} 次
+      </span>
+      <div class="ops">
+        <button type="button" class="btn text" (click)="retryOne(row.questionId)">重练</button>
+        <a class="btn text" [routerLink]="['/user/questions', row.questionId]">解析</a>
+        <button type="button" class="btn text danger" (click)="remove(row.questionId)">移出</button>
+      </div>
+    </article>
+    <div class="panel" *ngIf="!rows.length">暂无错题，先去在线答题吧。</div>
+  </div>
+</section>

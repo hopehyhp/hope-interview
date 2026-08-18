@@ -1,0 +1,135 @@
+<section class="page">
+  <div class="toolbar">
+    <div class="filters">
+      <input class="ctrl" [(ngModel)]="keyword" placeholder="搜索题干" />
+      <select class="ctrl" [(ngModel)]="categoryId">
+        <option value="">全部分类</option>
+        <option *ngFor="let item of categoryList" [value]="item.id">{{ item.name }}</option>
+      </select>
+      <select class="ctrl" [(ngModel)]="type">
+        <option value="">全部题型</option>
+        <option value="judge">判断</option>
+        <option value="single">单选</option>
+        <option value="multiple">多选</option>
+        <option value="essay">简答</option>
+      </select>
+    </div>
+    <div class="ops">
+      <button type="button" class="btn" (click)="exportBank()">导出 JSON</button>
+      <button type="button" class="btn" (click)="importInput.click()">导入合并</button>
+      <button type="button" class="btn" (click)="replaceInput.click()">覆盖导入</button>
+      <button type="button" class="btn primary" (click)="openCreate()">新建题目</button>
+      <input #importInput type="file" accept="application/json" hidden (change)="importBank($event, 'merge')" />
+      <input #replaceInput type="file" accept="application/json" hidden (change)="importBank($event, 'replace')" />
+    </div>
+  </div>
+  <p class="muted" *ngIf="ioMsg" style="margin: 0 0 12px;">{{ ioMsg }}</p>
+
+  <div class="panel table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>题干</th>
+          <th>分类</th>
+          <th>题型</th>
+          <th>难度</th>
+          <th>状态</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of rows">
+          <td>{{ row.title }}</td>
+          <td>{{ categoryName(row.categoryId) }}</td>
+          <td>{{ typeLabels[row.type] }}</td>
+          <td>{{ diffLabels[row.difficulty] }}</td>
+          <td>{{ row.enabled ? '公开' : '隐藏' }}</td>
+          <td class="ops">
+            <button type="button" class="btn text" (click)="openEdit(row)">编辑</button>
+            <button type="button" class="btn text danger" (click)="askDelete(row)">删除</button>
+          </td>
+        </tr>
+        <tr *ngIf="!rows.length">
+          <td colspan="6" class="empty">暂无题目</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="mask" *ngIf="showForm" (click)="closeForm()">
+  <div class="modal wide" (click)="$event.stopPropagation()">
+    <h3>{{ editing ? '编辑题目' : '新建题目' }}</h3>
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <label>题干<input type="text" formControlName="title" /></label>
+      <div class="grid-3">
+        <label>
+          分类
+          <select formControlName="categoryId">
+            <option value="">请选择</option>
+            <option *ngFor="let item of categoryList" [value]="item.id">{{ item.name }}</option>
+          </select>
+        </label>
+        <label>
+          题型
+          <select formControlName="type" (change)="onTypeChange(form.controls.type.value)">
+            <option value="judge">判断</option>
+            <option value="single">单选</option>
+            <option value="multiple">多选</option>
+            <option value="essay">简答</option>
+          </select>
+        </label>
+        <label>
+          难度
+          <select formControlName="difficulty">
+            <option value="easy">基础</option>
+            <option value="medium">进阶</option>
+            <option value="hard">难点</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="options" *ngIf="isChoice" formArrayName="options">
+        <div class="option-head">
+          <span>选项与正确答案</span>
+          <button type="button" class="btn text" *ngIf="!isJudge" (click)="addOption()">添加选项</button>
+        </div>
+        <div class="option-row" *ngFor="let opt of options.controls; let i = index" [formGroupName]="i">
+          <input class="key" formControlName="key" />
+          <input formControlName="text" placeholder="选项内容" />
+          <label class="check">
+            <input
+              type="checkbox"
+              [checked]="isChecked(optionKey(i))"
+              (change)="toggleKey(optionKey(i))"
+            />
+            正确
+          </label>
+          <button type="button" class="btn text danger" *ngIf="!isJudge" (click)="removeOption(i)">移除</button>
+        </div>
+      </div>
+
+      <label>参考解答<textarea rows="5" formControlName="analysis"></textarea></label>
+      <label class="check">
+        <input type="checkbox" formControlName="enabled" />
+        对学员公开
+      </label>
+      <p class="error" *ngIf="error">{{ error }}</p>
+      <div class="modal-ops">
+        <button type="button" class="btn" (click)="closeForm()">取消</button>
+        <button type="submit" class="btn primary">保存</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="mask" *ngIf="confirming" (click)="confirming = null">
+  <div class="modal sm" (click)="$event.stopPropagation()">
+    <h3>删除题目</h3>
+    <p>确认删除该题？此操作不可恢复。</p>
+    <div class="modal-ops">
+      <button type="button" class="btn" (click)="confirming = null">取消</button>
+      <button type="button" class="btn primary" (click)="doDelete()">删除</button>
+    </div>
+  </div>
+</div>

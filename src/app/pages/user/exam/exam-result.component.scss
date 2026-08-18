@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+.review {
+  margin-bottom: 12px;
+}
+
+.review h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.review p {
+  margin: 0 0 6px;
+  color: var(--c-text);
+}
+
+.meta {
+  margin: 0 0 8px;
+  color: var(--c-text-muted);
+  font-size: 12px;
+}
+
+.meta em {
+  margin-left: 8px;
+  font-style: normal;
+}
+
+.ok {
+  color: #067647;
+}
+
+.bad {
+  color: #b42318;
+}
+
+.analysis {
+  padding-top: 8px;
+  border-top: 1px solid var(--c-border);
+  color: var(--c-text-muted) !important;
+  line-height: 1.7;
+}

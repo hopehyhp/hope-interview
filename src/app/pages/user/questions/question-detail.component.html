@@ -1,0 +1,23 @@
+<section class="page" *ngIf="question">
+  <div class="toolbar">
+    <a class="btn" routerLink="/user/questions">返回题库</a>
+    <button type="button" class="btn" (click)="toggleFav()">{{ favorited ? '取消收藏' : '收藏本题' }}</button>
+  </div>
+
+  <article class="panel detail">
+    <p class="meta">
+      {{ categoryName }} · {{ typeLabels[question.type] }} · {{ diffLabels[question.difficulty] }}
+    </p>
+    <h2>{{ question.title }}</h2>
+    <ul class="opts" *ngIf="question.options.length">
+      <li *ngFor="let opt of question.options">
+        <b>{{ opt.key }}.</b> {{ opt.text }}
+      </li>
+    </ul>
+    <div class="ref">
+      <h3>参考解答</h3>
+      <p *ngIf="answerText">正确答案：{{ answerText }}</p>
+      <p>{{ question.analysis }}</p>
+    </div>
+  </article>
+</section>

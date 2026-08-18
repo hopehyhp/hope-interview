@@ -1,0 +1,19 @@
+<section class="page">
+  <p class="lead">{{ name }}，欢迎回到管理端。</p>
+  <div class="stats">
+    <article *ngFor="let item of stats">
+      <span>{{ item.label }}</span>
+      <strong>{{ item.value }}</strong>
+    </article>
+  </div>
+  <div class="panel">
+    <h3>快捷入口</h3>
+    <p>
+      <a routerLink="/admin/questions">题库管理</a>
+      ·
+      <a routerLink="/admin/categories">分类管理</a>
+      ·
+      <a routerLink="/admin/users">用户管理</a>
+    </p>
+  </div>
+</section>

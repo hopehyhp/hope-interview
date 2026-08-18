@@ -1,0 +1,26 @@
+<app-auth-shell>
+  <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()">
+    <h2>登录</h2>
+    <p class="sub">使用账号进入管理端或学习端</p>
+
+    <label>
+      账号
+      <input type="text" formControlName="username" autocomplete="username" />
+      <span class="error" *ngIf="fieldError('username') as msg">{{ msg }}</span>
+    </label>
+    <label>
+      密码
+      <input type="password" formControlName="password" autocomplete="current-password" />
+      <span class="error" *ngIf="fieldError('password') as msg">{{ msg }}</span>
+    </label>
+
+    <p class="error" *ngIf="error">{{ error }}</p>
+
+    <button type="submit" class="btn-primary" [disabled]="submitting">进入系统</button>
+
+    <p class="hint">
+      演示账号：管理员 <code>admin / admin123</code>，学员 <code>user / user123</code>
+    </p>
+    <a class="link" routerLink="/register">没有账号？去注册</a>
+  </form>
+</app-auth-shell>

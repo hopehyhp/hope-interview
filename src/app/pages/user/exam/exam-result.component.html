@@ -1,0 +1,38 @@
+<section class="page" *ngIf="record">
+  <div class="stats">
+    <article>
+      <span>客观题得分</span>
+      <strong>{{ record.scoredCount ? record.score : '-' }}</strong>
+    </article>
+    <article>
+      <span>客观题正确</span>
+      <strong>{{ record.correctCount }}/{{ record.scoredCount }}</strong>
+    </article>
+    <article>
+      <span>错题入本</span>
+      <strong>{{ wrongCount }}</strong>
+    </article>
+    <article>
+      <span>总题量</span>
+      <strong>{{ record.items.length }}</strong>
+    </article>
+  </div>
+
+  <div class="toolbar">
+    <a class="btn" routerLink="/user/exam">再组一卷</a>
+    <a class="btn primary" routerLink="/user/wrong">查看错题本</a>
+  </div>
+
+  <article class="panel review" *ngFor="let item of record.items">
+    <p class="meta">
+      {{ typeLabels[item.type] }}
+      <em [class.ok]="item.correct" [class.bad]="!item.correct">
+        {{ item.scored ? (item.correct ? '正确' : '错误') : (item.correct ? '已作答' : '未作答') }}
+      </em>
+    </p>
+    <h3>{{ item.title }}</h3>
+    <p>你的作答：{{ displayAnswer(item.userAnswer, item.type) }}</p>
+    <p *ngIf="item.scored">参考答案：{{ displayAnswer(item.correctAnswer, item.type) }}</p>
+    <p class="analysis">{{ item.analysis }}</p>
+  </article>
+</section>

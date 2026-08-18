@@ -1,0 +1,77 @@
+<section class="take" *ngIf="session && question">
+  <header class="bar">
+    <div class="bar-main">
+      <span class="tag">{{ typeLabels[question.type] }}题</span>
+      <span>本组 {{ groupNo }} / {{ groupSize }}</span>
+      <span class="muted">全卷 {{ session.index + 1 }} / {{ session.questions.length }}</span>
+    </div>
+    <strong class="clock" [class.warn]="remainSec >= 0 && remainSec <= 60">{{ clock }}</strong>
+  </header>
+
+  <div class="grid">
+    <article class="panel stem">
+      <p class="meta">{{ categoryName(question.categoryId) }} · {{ diffLabels[question.difficulty] }}</p>
+      <h2>{{ question.title }}</h2>
+
+      <div class="judge" *ngIf="question.type === 'judge'">
+        <button type="button" class="opt" [class.on]="isOn(opt.key)" *ngFor="let opt of judgeOpts" (click)="pick(opt.key)">
+          {{ opt.text }}
+        </button>
+      </div>
+
+      <div class="opts" *ngIf="question.type === 'single' || question.type === 'multiple'">
+        <p class="hint" *ngIf="question.type === 'multiple'">可多选</p>
+        <button type="button" class="opt" *ngFor="let opt of question.options" [class.on]="isOn(opt.key)" (click)="pick(opt.key)">
+          <b>{{ opt.key }}.</b> {{ opt.text }}
+        </button>
+      </div>
+
+      <textarea
+        *ngIf="question.type === 'essay'"
+        rows="8"
+        [ngModel]="answer.text"
+        (ngModelChange)="writeEssay($event)"
+        placeholder="写下要点，交卷后对照解析自评"
+      ></textarea>
+
+      <div class="nav">
+        <button type="button" class="btn" [disabled]="session.index === 0" (click)="go(-1)">上一题</button>
+        <button
+          type="button"
+          class="btn"
+          *ngIf="session.index < session.questions.length - 1"
+          (click)="go(1)"
+        >
+          下一题
+        </button>
+      </div>
+    </article>
+
+    <aside class="panel sheet">
+      <div class="sheet-head">
+        <h3>答题卡</h3>
+        <span class="muted">已答 {{ answeredCount }} / {{ session.questions.length }}</span>
+      </div>
+
+      <div class="group" *ngFor="let group of sheetGroups">
+        <div class="group-head">
+          <strong>{{ group.label }}题</strong>
+          <span class="muted">{{ groupDone(group) }}/{{ group.items.length }}</span>
+        </div>
+        <div class="dots">
+          <button
+            type="button"
+            *ngFor="let item of group.items; let n = index"
+            [class.on]="item.index === session.index"
+            [class.done]="answered(item.id)"
+            (click)="jump(item.index)"
+          >
+            {{ n + 1 }}
+          </button>
+        </div>
+      </div>
+
+      <button type="button" class="btn primary submit" [disabled]="submitting" (click)="submit()">交卷</button>
+    </aside>
+  </div>
+</section>

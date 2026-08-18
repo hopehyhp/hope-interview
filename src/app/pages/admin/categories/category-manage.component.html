@@ -1,0 +1,63 @@
+<section class="page">
+  <div class="toolbar">
+    <p class="lead">维护面试题分类，供题库归属使用。</p>
+    <button type="button" class="btn primary" (click)="openCreate()">新建分类</button>
+  </div>
+  <p class="banner" *ngIf="error">{{ error }}</p>
+
+  <div class="panel table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>分类</th>
+          <th>题目数</th>
+          <th>排序</th>
+          <th>说明</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of rows">
+          <td>{{ row.name }}</td>
+          <td>{{ countOf(row.id) }}</td>
+          <td>{{ row.sort }}</td>
+          <td class="muted">{{ row.description || '—' }}</td>
+          <td class="ops">
+            <button type="button" class="btn text" (click)="openEdit(row)">编辑</button>
+            <button type="button" class="btn text danger" (click)="askDelete(row)">删除</button>
+          </td>
+        </tr>
+        <tr *ngIf="!rows.length">
+          <td colspan="5" class="empty">暂无分类</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="mask" *ngIf="showForm" (click)="closeForm()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <h3>{{ editing ? '编辑分类' : '新建分类' }}</h3>
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <label>名称<input type="text" formControlName="name" /></label>
+      <label>排序<input type="number" formControlName="sort" /></label>
+      <label>说明<input type="text" formControlName="description" /></label>
+      <p class="error" *ngIf="error">{{ error }}</p>
+      <div class="modal-ops">
+        <button type="button" class="btn" (click)="closeForm()">取消</button>
+        <button type="submit" class="btn primary">保存</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="mask" *ngIf="confirming" (click)="confirming = null">
+  <div class="modal sm" (click)="$event.stopPropagation()">
+    <h3>删除分类</h3>
+    <p>确认删除「{{ confirming.name }}」？此操作不可恢复。</p>
+    <div class="modal-ops">
+      <button type="button" class="btn" (click)="confirming = null">取消</button>
+      <button type="button" class="btn primary" (click)="doDelete()">删除</button>
+    </div>
+  </div>
+</div>

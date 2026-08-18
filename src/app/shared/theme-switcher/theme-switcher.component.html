@@ -1,0 +1,18 @@
+<div class="swatches" role="group" aria-label="主题切换">
+  <button
+    type="button"
+    class="dot blue"
+    [class.on]="current === 'blue'"
+    (click)="set('blue')"
+    title="蓝白"
+    aria-label="蓝白主题"
+  ></button>
+  <button
+    type="button"
+    class="dot purple"
+    [class.on]="current === 'purple'"
+    (click)="set('purple')"
+    title="紫白"
+    aria-label="紫白主题"
+  ></button>
+</div>

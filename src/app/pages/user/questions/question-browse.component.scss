@@ -1,0 +1,40 @@
+:host {
+  display: block;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.q-item {
+  display: block;
+  padding: 14px 16px;
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
+  background: var(--c-surface);
+  color: var(--c-text);
+}
+
+.q-item:hover {
+  border-color: var(--c-primary);
+}
+
+.q-item strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.q-item span {
+  color: var(--c-text-muted);
+  font-size: 12px;
+}
+
+.q-item em {
+  margin-left: 8px;
+  font-style: normal;
+  color: var(--c-primary);
+}

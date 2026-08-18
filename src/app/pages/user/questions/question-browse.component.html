@@ -1,0 +1,28 @@
+<section class="page">
+  <div class="chips">
+    <button type="button" [class.on]="categoryId === ''" (click)="categoryId = ''">全部</button>
+    <button
+      type="button"
+      *ngFor="let item of categoryList"
+      [class.on]="categoryId === item.id"
+      (click)="categoryId = item.id"
+    >
+      {{ item.name }}
+    </button>
+  </div>
+  <div class="toolbar">
+    <input class="ctrl" [(ngModel)]="keyword" placeholder="搜索题干" />
+    <span class="muted">共 {{ rows.length }} 题</span>
+  </div>
+
+  <div class="list">
+    <a class="q-item" *ngFor="let row of rows" [routerLink]="['/user/questions', row.id]">
+      <strong>{{ row.title }}</strong>
+      <span>
+        {{ categoryName(row.categoryId) }} · {{ typeLabels[row.type] }} · {{ diffLabels[row.difficulty] }}
+        <em *ngIf="fav(row.id)">已收藏</em>
+      </span>
+    </a>
+    <div class="panel" *ngIf="!rows.length">暂无公开题目</div>
+  </div>
+</section>

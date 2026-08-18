@@ -1,0 +1,172 @@
+:host {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
+
+.shell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  height: 100%;
+  overflow: hidden;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: auto;
+  background: var(--c-surface);
+  border-right: 1px solid var(--c-border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.mark {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--c-primary);
+  color: var(--c-primary);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 26px;
+  text-align: center;
+}
+
+.brand strong {
+  display: block;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+}
+
+.brand small {
+  color: var(--c-text-muted);
+  font-size: 11px;
+}
+
+nav {
+  padding: 12px 10px;
+}
+
+nav a {
+  display: block;
+  padding: 9px 12px;
+  margin-bottom: 2px;
+  border-left: 2px solid transparent;
+  color: var(--c-text-muted);
+  font-size: 13px;
+}
+
+nav a:hover {
+  color: var(--c-text);
+  background: var(--c-bg);
+}
+
+nav a.active {
+  color: var(--c-primary);
+  background: var(--c-primary-soft);
+  border-left-color: var(--c-primary);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--c-bg);
+}
+
+.header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 0 24px;
+  background: var(--c-surface);
+  border-bottom: 1px solid var(--c-border);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  background: var(--c-primary);
+  color: #fff;
+  font-size: 12px;
+  line-height: 28px;
+  text-align: center;
+}
+
+.name {
+  font-size: 13px;
+}
+
+.text-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--c-text-muted);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.text-btn:hover {
+  color: var(--c-primary);
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 24px 28px;
+}
+
+@media (max-width: 840px) {
+  .shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--c-border);
+  }
+
+  nav {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+  }
+
+  nav a {
+    white-space: nowrap;
+  }
+}

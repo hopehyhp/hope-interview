@@ -1,0 +1,19 @@
+<section class="page">
+  <p class="lead">{{ name }}，从题库开始准备下一场面试。</p>
+  <div class="stats">
+    <article *ngFor="let item of stats">
+      <span>{{ item.label }}</span>
+      <strong>{{ item.value }}</strong>
+    </article>
+  </div>
+  <div class="panel">
+    <h3>学习入口</h3>
+    <p>
+      <a routerLink="/user/questions">题库浏览</a>
+      ·
+      <a routerLink="/user/exam">在线答题</a>
+      ·
+      <a routerLink="/user/wrong">错题本</a>
+    </p>
+  </div>
+</section>

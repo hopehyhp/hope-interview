@@ -1,0 +1,35 @@
+<app-auth-shell>
+  <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()">
+    <h2>注册</h2>
+    <p class="sub">新账号默认进入学员端</p>
+
+    <label>
+      账号
+      <input type="text" formControlName="username" autocomplete="username" />
+      <span class="error" *ngIf="fieldError('username') as msg">{{ msg }}</span>
+    </label>
+    <label>
+      显示名称
+      <input type="text" formControlName="displayName" autocomplete="nickname" />
+      <span class="error" *ngIf="fieldError('displayName') as msg">{{ msg }}</span>
+    </label>
+    <label>
+      密码
+      <input type="password" formControlName="password" autocomplete="new-password" />
+      <span class="error" *ngIf="fieldError('password') as msg">{{ msg }}</span>
+    </label>
+    <label>
+      确认密码
+      <input
+        type="password"
+        formControlName="confirm"
+        autocomplete="new-password"
+        [class.is-invalid]="form.hasError('mismatch') && form.controls.confirm.touched"
+      />
+      <span class="error" *ngIf="fieldError('confirm') as msg">{{ msg }}</span>
+    </label>
+
+    <button type="submit" class="btn-primary" [disabled]="submitting">创建账号</button>
+    <a class="link" routerLink="/login">已有账号？去登录</a>
+  </form>
+</app-auth-shell>
